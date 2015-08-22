@@ -1,0 +1,19 @@
+body,
+html {
+  height: 100%;
+  width: 100%;
+}
+
+.map {
+  display: inline-block;
+  width: 70%;
+  height: 100%;
+  background: #eee;
+}
+
+.route {
+  display: inline-block;
+  width: 29%;
+  height: 100%;
+  background: #555;
+}

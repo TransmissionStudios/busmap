@@ -35,14 +35,15 @@
         infoBox(map, marker, data);
       }
 
+      var infoWindow
+
       function infoBox(map, marker, data) {
-        var infoWindow = new google.maps.InfoWindow();
+        infoWindow = new google.maps.InfoWindow();
         google.maps.event.addListener(marker, 'click', function(e) {
           console.log(data.id);
 
           var url = 'http://digitaslbi-id-test.herokuapp.com/bus-stops/' + data.id;
           var stopName = data.name;
-
           infoWindow.setContent(stopName);
           infoWindow.open(map, marker);
 

@@ -1,0 +1,13 @@
+.map {
+  display: block;
+  width: 100%;
+  height: 20em;
+}
+
+@media screen and (min-width: $large) {
+  .map {
+    display: inline-block;
+    width: 69%;
+    height: 100%;
+  }
+}

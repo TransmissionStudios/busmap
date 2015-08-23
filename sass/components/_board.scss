@@ -1,17 +1,18 @@
 .board {
-  display: inline-block;
-  width: 29%;
-  height: 100%;
+  display: block;
+  width: 100%;
   vertical-align: top;
 }
 
 .board h1 {
-  font-size: 100%;
   margin-left: 2em;
+  font-size: 100%;
+  text-align: center;
 }
 
 .board__arrivals {
   width: 100%;
+  margin: 0 auto;
   background: $black;
   margin-bottom: 1em;
 }
@@ -72,4 +73,28 @@
 
 .board__cancelled_message {
   color: $yellow;
+}
+
+@media screen and (min-width: $medium) {
+  .board__arrivals {
+    width: 50%;
+  }
+}
+
+@media screen and (min-width: $large) {
+  .board {
+    display: inline-block;
+    width: 30%;
+  }
+
+  .board__arrivals {
+    width: 100%;
+  }
+}
+
+@media screen and (min-width: $x-large) {
+  .board__arrivals {
+    max-width: 25em;
+    margin: 0 0 0 1em;
+  }
 }

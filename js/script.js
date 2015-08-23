@@ -1,4 +1,4 @@
-
+'use strict';
 
 (function($) {
   var url = 'http://digitaslbi-id-test.herokuapp.com/bus-stops?northEast=51.52783450,-0.04076115&southWest=51.51560467,-0.10225884';
@@ -14,7 +14,7 @@
       console.dir(json.markers[0]);
 
       var myGmaps = $.extend(google.maps, {});
-      var latlng = new myGmaps.LatLng(51.5286416, -0.1015987);
+      var latlng = new myGmaps.LatLng(51.51560467, -0.10225884);
       var options = {
         zoom: 14,
         center: latlng,
@@ -23,19 +23,20 @@
       };
       var map = new myGmaps.Map($('#map')[0], options);
 
-      for (i = 0; i < json.markers.length; i++) {
+      for (var i = 0; i < json.markers.length; i++) {
         var data = json.markers[i];
         var myLatLng = {lat: data.lat, lng: data.lng};
 
-        marker = new google.maps.Marker({
+        var marker = new google.maps.Marker({
           position: myLatLng,
           map: map,
-          title: 'London bus stop map'
+          title: 'London bus stop map',
+          icon: 'images/bus-icon.png'
         });
         infoBox(map, marker, data);
       }
 
-      var infoWindow
+      var infoWindow;
 
       function infoBox(map, marker, data) {
         infoWindow = new google.maps.InfoWindow();
@@ -44,7 +45,8 @@
 
           var url = 'http://digitaslbi-id-test.herokuapp.com/bus-stops/' + data.id;
           var stopName = data.name;
-          infoWindow.setContent(stopName);
+          var stopIndicator = data.stopIndicator ? '<br/>Stop ' + data.stopIndicator : '';
+          infoWindow.setContent(stopName + stopIndicator);
           infoWindow.open(map, marker);
 
           $.ajax({
@@ -55,7 +57,7 @@
             contentType: "application/json",
             dataType: 'jsonp',
             success: function(data) {
-              displayBoard(data, stopName);
+              displayBoard(data, stopName, stopIndicator);
             },
             error: function(e) {
               console.log(e.message);
@@ -70,22 +72,22 @@
     }
   });
 
-  function displayBoard(data, name) {
+  function displayBoard(data, stopName, stopIndicator) {
     $('.board__arrivals').html('');
-    $('.board h1').html('Arrivals to ' + name);
+    $('.board h1').html('Arrivals to ' + stopName + stopIndicator);
 
-    for (i = 0; i < data.arrivals.length; i++) {
+    for (var i = 0; i < data.arrivals.length; i++) {
       var cancelledMessage = '';
-      if(data.isCancelled == true) {
+      if(data.isCancelled === true) {
         cancelledMessage = '<div class="board__cancelled-message">This service has been cancelled.</div>';
       }
       $('.board__arrivals').append(
-        '<div class="board__container"><div class="board__number">' + data.arrivals[i].routeId + '</div>'
-        + '<div class="board__destination">' + data.arrivals[i].destination + '</div>'
-        + '<div class="board__estimated-wait"><span class="board__indicator">Due: </span>' + data.arrivals[i].estimatedWait + '</div>'
-        + '<div class="board__scheduled-time"><span class="board__indicator">Arrival time: </span>' + data.arrivals[i].scheduledTime + '</div>'
-        + cancelledMessage
-        + '</div>'
+        '<div class="board__container"><div class="board__number">' + data.arrivals[i].routeId + '</div>' +
+        '<div class="board__destination">' + data.arrivals[i].destination + '</div>' +
+        '<div class="board__estimated-wait"><span class="board__indicator">Due: </span>' + data.arrivals[i].estimatedWait + '</div>' +
+        '<div class="board__scheduled-time"><span class="board__indicator">Arrival time: </span>' + data.arrivals[i].scheduledTime + '</div>' +
+        cancelledMessage +
+        '</div>'
       );
     }
   }

@@ -79,11 +79,12 @@
         cancelledMessage = '<div class="board__cancelled-message">This service has been cancelled.</div>';
       }
       $('.board__arrivals').append(
-        '<div class="board__number">' + data.arrivals[i].routeId + '</div>'
+        '<div class="board__container"><div class="board__number">' + data.arrivals[i].routeId + '</div>'
         + '<div class="board__destination">' + data.arrivals[i].destination + '</div>'
         + '<div class="board__estimated-wait"><span class="board__indicator">Due: </span>' + data.arrivals[i].estimatedWait + '</div>'
         + '<div class="board__scheduled-time"><span class="board__indicator">Arrival time: </span>' + data.arrivals[i].scheduledTime + '</div>'
         + cancelledMessage
+        + '</div>'
       );
     }
   }

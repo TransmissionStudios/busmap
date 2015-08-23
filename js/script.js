@@ -53,8 +53,10 @@
             contentType: "application/json",
             dataType: 'jsonp',
             success: function(data) {
-              console.log(data);
-              console.log(data.arrivals.routeId);
+              //console.log(data);
+              //console.log(data.arrivals.routeId);
+
+              displayBoard(data);
             },
             error: function(e) {
               console.log(e.message);
@@ -68,5 +70,19 @@
       console.log(e.message);
     }
   });
+
+  function displayBoard(data) {
+    $('.board__arrivals').html('');
+
+    for (i = 0; i < data.arrivals.length; i++) {
+      console.log(i);
+      $('.board__arrivals').append(
+        '<div class="board__number">' + data.arrivals[i].routeId + '</div>'
+        + '<div class="board__destination">' + data.arrivals[i].destination + '</div>'
+        + '<div class="board__estimated-wait"><span class="board__indicator">Due: </span>' + data.arrivals[i].estimatedWait + '</div>'
+        + '<div class="board__scheduled-time"><span class="board__indicator">Arrival time: </span>' + data.arrivals[i].scheduledTime + '</div>'
+      );
+    }
+  }
 
 })(jQuery);

@@ -1,0 +1,49 @@
+.board {
+  display: inline-block;
+  width: 29%;
+  height: 100%;
+  vertical-align: top;
+}
+
+.board__arrivals {
+  width: 100%;
+  background: $black;
+  margin-bottom: 1em;
+}
+
+.board__number {
+  display: inline-block;
+  width: 30%;
+  padding: 1em 0;
+  color: $yellow;
+  font-size: 170%;
+  text-align: center;
+  border-right: 1px solid $grey-light;
+}
+
+.board__destination {
+  display: inline-block;
+  width: 60%;
+  color: $yellow;
+  font-size: 100%;
+  padding-left: 2em;
+}
+
+.board__estimated-wait {
+  color: $black;
+  padding: .5em 0 0 2em;
+  background: $grey-light;
+}
+
+.board__scheduled-time {
+  @extend .board__estimated-wait;
+  padding: 0 0 1em 2em;
+}
+
+.board__indicator {
+  display: inline-block;
+  width: 30%;
+  margin-right: .2em;
+  font-weight: bold;
+  text-align: right;
+}

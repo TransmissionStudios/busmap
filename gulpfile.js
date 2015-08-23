@@ -16,7 +16,7 @@ gulp.task('browsersync', function() {
   });
   gulp.watch("*.html").on('change', reload);
   gulp.watch("js/*.js").on('change', reload);
-  gulp.watch("css/**/*.css").on('change', reload);
+  gulp.watch("sass/**/*.scss").on('change', reload);
 });
 
 // Using Node Sass (LibSass) to compile Sass.

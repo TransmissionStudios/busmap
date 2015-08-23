@@ -14,44 +14,54 @@
       console.dir(json.markers[0]);
 
       var myGmaps = $.extend(google.maps, {});
+      var latlng = new myGmaps.LatLng(51.5286416, -0.1015987);
+      var options = {
+        zoom: 14,
+        center: latlng,
+        mapTypeId: myGmaps.MapTypeId.ROADMAP
 
-
-        var latlng = new myGmaps.LatLng(51.5286416, -0.1015987);
-        var options = {
-          zoom: 14,
-          center: latlng,
-          mapTypeId: myGmaps.MapTypeId.ROADMAP
-
-        };
-
-        var map = new myGmaps.Map($('#map')[0], options);
-
+      };
+      var map = new myGmaps.Map($('#map')[0], options);
 
       for (i = 0; i < json.markers.length; i++) {
-        var myLatLng = {lat: json.markers[i].lat, lng: json.markers[i].lng};
+        var data = json.markers[i];
+        var myLatLng = {lat: data.lat, lng: data.lng};
 
-        //myPopup = 'popup' + i;
-        popup = '<div>' + json.markers[i].name + '</div>';
-
-        var myInfoWindow = 'infowindow' + i;
-
-        var myInfoWindow = new google.maps.InfoWindow({
-          content: popup
-        });
-        var myMarker =  'marker' + i;
-
-        console.log(myInfoWindow);
-
-        myMarker = new google.maps.Marker({
+        marker = new google.maps.Marker({
           position: myLatLng,
           map: map,
           title: 'Hello World!'
         });
-        myMarker.addListener('click', function() {
-          myInfoWindow.open(map, myMarker);
-        });
+        infoBox(map, marker, data);
       }
 
+      function infoBox(map, marker, data) {
+        var infoWindow = new google.maps.InfoWindow();
+        google.maps.event.addListener(marker, 'click', function(e) {
+          console.log(data.id);
+
+          var url = 'http://digitaslbi-id-test.herokuapp.com/bus-stops/' + data.id;
+
+          infoWindow.setContent(data.id);
+          infoWindow.open(map, marker);
+
+          $.ajax({
+            type: 'GET',
+            url: url,
+            async: false,
+            jsonpCallback: 'jsonCallback',
+            contentType: "application/json",
+            dataType: 'jsonp',
+            success: function(data) {
+              console.log(data);
+              console.log(data.arrivals.routeId);
+            },
+            error: function(e) {
+              console.log(e.message);
+            }
+          });
+        });
+      }
 
     },
     error: function(e) {

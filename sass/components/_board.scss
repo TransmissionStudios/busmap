@@ -5,6 +5,11 @@
   vertical-align: top;
 }
 
+.board h1 {
+  font-size: 100%;
+  margin-left: 2em;
+}
+
 .board__arrivals {
   width: 100%;
   background: $black;
@@ -30,9 +35,9 @@
 }
 
 .board__estimated-wait {
-  color: $black;
   padding: .5em 0 0 2em;
   background: $grey-light;
+  color: $black;
 }
 
 .board__scheduled-time {
@@ -46,4 +51,8 @@
   margin-right: .2em;
   font-weight: bold;
   text-align: right;
+}
+
+.board__cancelled_message {
+  color: $yellow;
 }

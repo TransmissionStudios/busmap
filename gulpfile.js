@@ -26,6 +26,7 @@ gulp.task('sass', function() {
     .pipe($.sass())
     .pipe($.autoprefixer('last 2 versions', 'ie 8', 'ie 9'))
     // Optionally produce production CSS with $ gulp sass --production.
+    .pipe($.if(!arg.production, $.sourcemaps.write('./')))
     .pipe($.if(arg.production, $.minifyCss()))
     .pipe(gulp.dest('css'));
 });
@@ -39,7 +40,7 @@ gulp.task('scss-lint', function() {
     }));
 });
 
-// Default - initial compile and watch.
+// Default - initial compile.
 gulp.task('default', ['sass', 'scss-lint'], function() {
 });
 
@@ -49,5 +50,5 @@ gulp.task('watch', function() {
 });
 
 // Run BrowserSync.
-gulp.task('sync', ['watch', 'browsersync'], function() {
+gulp.task('sync', ['sass', 'watch', 'browsersync'], function() {
 });

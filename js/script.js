@@ -11,8 +11,6 @@
     contentType: "application/json",
     dataType: 'jsonp',
     success: function(json) {
-      console.dir(json.markers[0]);
-
       var myGmaps = $.extend(google.maps, {});
       var latlng = new myGmaps.LatLng(51.51560467, -0.10225884);
       var options = {
@@ -41,8 +39,6 @@
       function infoBox(map, marker, data) {
         infoWindow = new google.maps.InfoWindow();
         google.maps.event.addListener(marker, 'click', function(e) {
-          console.log(data.id);
-
           var url = 'http://digitaslbi-id-test.herokuapp.com/bus-stops/' + data.id;
           var stopName = data.name;
           var stopIndicator = data.stopIndicator ? '<br/>Stop ' + data.stopIndicator : '';
@@ -74,7 +70,7 @@
 
   function displayBoard(data, stopName, stopIndicator) {
     $('.board__arrivals').html('');
-    $('.board h1').html('Arrivals to ' + stopName + stopIndicator);
+    $('.board__header h1').html('Arrivals to ' + stopName + stopIndicator);
 
     for (var i = 0; i < data.arrivals.length; i++) {
       var cancelledMessage = '';
@@ -82,7 +78,7 @@
         cancelledMessage = '<div class="board__cancelled-message">This service has been cancelled.</div>';
       }
       $('.board__arrivals').append(
-        '<div class="board__container"><div class="board__number">' + data.arrivals[i].routeId + '</div>' +
+        '<div class="board__container"><div class="board__number num">' + data.arrivals[i].routeId + '</div>' +
         '<div class="board__destination">' + data.arrivals[i].destination + '</div>' +
         '<div class="board__estimated-wait"><span class="board__indicator">Due: </span>' + data.arrivals[i].estimatedWait + '</div>' +
         '<div class="board__scheduled-time"><span class="board__indicator">Arrival time: </span>' + data.arrivals[i].scheduledTime + '</div>' +
